@@ -82,8 +82,12 @@ WSGI_APPLICATION = 'newproject.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'reactjs_django_app_db',
+        'USER': 'superuser',
+        'PASSWORD': 'superuser',
+        'HOST': 'reactjs-django-app-db.cr4uym6sinwj.us-east-2.rds.amazonaws.com',
+        'PORT': '5432',
     }
 }
 
@@ -132,5 +136,6 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # CORS settings
 CORS_ALLOW_ALL_ORIGINS = False
 CORS_ALLOWED_ORIGINS = [
-    "https://reactjs-django-test-app.vercel.app/",
+    "https://reactjs-django-test-app.vercel.app",
+    "http://localhost:5173",
 ]
