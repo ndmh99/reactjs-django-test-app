@@ -25,7 +25,11 @@ SECRET_KEY = 'django-insecure-q@e58obh#ae%904$je0&w_f5vnl%w_w2v10fda2g3*o2m-9_qi
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    'reactjs-django-simple-crud-book-app.onrender.com',
+    'localhost',
+    '127.0.0.1',
+]
 
 
 # Application definition
