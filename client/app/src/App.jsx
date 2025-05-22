@@ -44,6 +44,12 @@ function App() {
   const [newTitle, setNewTitle] = useState("");
 
   /**
+   * Base URL for the API, change this to point to a different backend if needed.
+   * @constant {string}
+   */
+  const API_BASE_URL = "https://reactjs-django-simple-crud-book-app.onrender.com/api";
+
+  /**
    * useEffect runs fetchBooks() once when the component mounts.
    * This loads the initial list of books from the backend.
    */
@@ -57,7 +63,7 @@ function App() {
    */
   const fetchBooks = async () => {
     try {
-      const response = await fetch("http://127.0.0.1:8000/api/books/");
+      const response = await fetch(`${API_BASE_URL}/books/`);
       const data = await response.json();
       setBooks(data);
     } catch (error) {
@@ -75,7 +81,7 @@ function App() {
       release_year: releaseYear
     };
     try {
-      const response = await fetch("http://127.0.0.1:8000/api/books/create/", {
+      const response = await fetch(`${API_BASE_URL}/books/create/`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
@@ -100,7 +106,7 @@ function App() {
       release_year,
     };
     try {
-      const response = await fetch(`http://127.0.0.1:8000/api/books/${pk}/`, {
+      const response = await fetch(`${API_BASE_URL}/books/${pk}/`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json"
@@ -120,7 +126,7 @@ function App() {
    */
   const deleteBook = async (pk) => {
     try {
-      await fetch(`http://127.0.0.1:8000/api/books/${pk}/`, {
+      await fetch(`${API_BASE_URL}/books/${pk}/`, {
         method: "DELETE",
       });
       setBooks((prev) => prev.filter((book) => book.id !== pk));
