@@ -1,0 +1,103 @@
+body {
+  background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+  font-family: 'Segoe UI', 'Roboto', Arial, sans-serif;
+  color: #222;
+  min-height: 100vh;
+}
+
+#root {
+  max-width: 600px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background: rgba(255,255,255,0.95);
+  border-radius: 18px;
+  box-shadow: 0 4px 24px 0 rgba(80, 120, 200, 0.10);
+  text-align: center;
+}
+
+h1 {
+  color: #7f53ac;
+  margin-bottom: 2rem;
+  letter-spacing: 1px;
+  background: linear-gradient(90deg, #7f53ac 0%, #647dee 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+input[type="text"],
+input[type="number"] {
+  padding: 0.5em 1em;
+  margin: 0.5em 0.5em 0.5em 0;
+  border: 1px solid #b6c3e6;
+  border-radius: 6px;
+  font-size: 1em;
+  outline: none;
+  transition: border 0.2s, box-shadow 0.2s;
+  background: linear-gradient(90deg, #f8fffe 0%, #fbeeff 100%);
+  box-shadow: 0 1px 4px 0 rgba(127, 83, 172, 0.07);
+  color: #222;
+}
+input[type="text"]::placeholder,
+input[type="number"]::placeholder {
+  color: #b197fc;
+  opacity: 1;
+  font-style: italic;
+}
+input[type="text"]:focus,
+input[type="number"]:focus {
+  border: 1.5px solid #7f53ac;
+  box-shadow: 0 0 0 2px #e0c3fc44;
+}
+
+button {
+  padding: 0.5em 1.2em;
+  margin: 0.5em 0.2em;
+  background: linear-gradient(90deg, #7f53ac 0%, #647dee 100%);
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  font-size: 1em;
+  cursor: pointer;
+  transition: background 0.2s, box-shadow 0.2s;
+  box-shadow: 0 2px 8px 0 rgba(127, 83, 172, 0.10);
+}
+button:hover {
+  background: linear-gradient(90deg, #647dee 0%, #7f53ac 100%);
+}
+button[style*="color: red"] {
+  background: #fff0f0;
+  color: #e03131;
+  border: 1px solid #e03131;
+}
+button[style*="color: red"]:hover {
+  background: #ffe3e3;
+}
+
+.card {
+  padding: 1.5em;
+  margin-bottom: 1.5em;
+  background: linear-gradient(90deg, #f8fffe 0%, #fbeeff 100%);
+  border-radius: 10px;
+  box-shadow: 0 2px 8px 0 rgba(127, 83, 172, 0.06);
+  text-align: left;
+}
+
+/* Book item styling */
+div[style*="border: 1px solid"] {
+  border: 1.5px solid #b6c3e6 !important;
+  border-radius: 10px;
+  background: linear-gradient(90deg, #f8fffe 0%, #fbeeff 100%);
+  margin-bottom: 1.5rem;
+  padding: 1.2rem;
+  box-shadow: 0 2px 8px 0 rgba(127, 83, 172, 0.04);
+}
+
+p {
+  margin: 0.3em 0;
+  font-size: 1.08em;
+}
+
+.read-the-docs {
+  color: #888;
+}
