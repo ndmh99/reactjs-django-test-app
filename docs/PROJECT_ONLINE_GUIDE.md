@@ -24,6 +24,7 @@ react-django/
   - Configure CORS to allow your frontend domain (see below).
   - **Configure DATABASES to use Amazon RDS PostgreSQL in `settings.py`:**
     ```python
+    # Use Amazon RDS/PostgreSQL for production (default)
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.postgresql',
@@ -34,6 +35,16 @@ react-django/
             'PORT': os.environ.get('RDS_PORT', '5432'),
         }
     }
+    # ---
+    # For local development with SQLite3, comment out the block above and uncomment the block below:
+    # DATABASES = {
+    #     'default': {
+    #         'ENGINE': 'django.db.backends.sqlite3',
+    #         'NAME': BASE_DIR / 'db.sqlite3',
+    #     }
+    # }
+    # ---
+    # See the README and docs for instructions on switching between RDS and SQLite3.
     ```
   - **Do NOT commit your RDS credentials. Use environment variables on Render.**
 
@@ -144,6 +155,8 @@ react-django/
   - Make sure `psycopg2-binary` is in `requirements.txt`.
 - **Migrations not applied:**
   - Run `python manage.py migrate` on Render after deployment.
+- **Local development:**
+  - If you want to use SQLite3 locally, comment out the RDS DATABASES block in `settings.py` and uncomment the SQLite3 block. See the comments in `settings.py` and this guide for details.
 
 ---
 

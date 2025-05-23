@@ -143,3 +143,20 @@ react-django/
 
 ## License
 This project is for educational purposes.
+
+---
+
+## Database Configuration (Switching Between RDS and SQLite3)
+
+By default, the backend is configured to use **Amazon RDS PostgreSQL** for production and cloud deployment.
+
+**To run locally with SQLite3:**
+1. Open `server/newproject/newproject/settings.py`.
+2. Comment out the RDS/PostgreSQL `DATABASES` block.
+3. Uncomment the provided SQLite3 `DATABASES` block (see the comments in `settings.py`).
+4. Run migrations and start the server as usual.
+
+**To deploy or use RDS again:**
+1. Comment out the SQLite3 block.
+2. Uncomment the RDS/PostgreSQL block.
+3. Make sure your environment variables for RDS are set (on Render or your production environment).

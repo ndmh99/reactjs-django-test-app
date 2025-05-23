@@ -79,31 +79,28 @@ TEMPLATES = [
 WSGI_APPLICATION = 'newproject.wsgi.application'  # WSGI entry point for deployment
 
 # Database configuration
-# Prefer external (cloud/production) database if available, otherwise use SQLite for local development
-# - On Render (production): Uses Amazon RDS PostgreSQL if RDS_* env vars are set
-# - On local dev: Falls back to SQLite if not
-# This allows you to develop easily on your laptop, but use a real cloud database in production.
-if os.environ.get('RDS_DB_NAME') and os.environ.get('RDS_HOSTNAME'):
-    # Use Amazon RDS/PostgreSQL if all required env vars are set
-    # These variables are set in the Render dashboard, not in your code!
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.postgresql',
-            'NAME': os.environ.get('RDS_DB_NAME'),
-            'USER': os.environ.get('RDS_USERNAME'),
-            'PASSWORD': os.environ.get('RDS_PASSWORD'),
-            'HOST': os.environ.get('RDS_HOSTNAME'),
-            'PORT': os.environ.get('RDS_PORT', '5432'),
-        }
+# Use Amazon RDS/PostgreSQL for production (default)
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': os.environ.get('RDS_DB_NAME'),
+        'USER': os.environ.get('RDS_USERNAME'),
+        'PASSWORD': os.environ.get('RDS_PASSWORD'),
+        'HOST': os.environ.get('RDS_HOSTNAME'),
+        'PORT': os.environ.get('RDS_PORT', '5432'),
     }
-else:
-    # Fallback to SQLite for local development (no setup required)
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.sqlite3',
-            'NAME': BASE_DIR / 'db.sqlite3',
-        }
-    }
+}
+
+# ---
+# For local development with SQLite3, comment out the block above and uncomment the block below:
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
+#     }
+# }
+# ---
+# See the README and docs for instructions on switching between RDS and SQLite3.
 
 # Password validation (recommended for production)
 # These validators help enforce strong passwords for admin and users.
