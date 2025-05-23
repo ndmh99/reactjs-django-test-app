@@ -1,6 +1,25 @@
-# React + Django Simple Book Management Project
+# React/Vite + Django + Amazon RDS Book Management Project
 
-This project is a beginner-friendly full-stack web application for managing a list of books. It demonstrates how to build a RESTful API backend with Django and a modern frontend with React. The app allows users to view, add, update, and delete books.
+<p align="center">
+  <img src="https://raw.githubusercontent.com/github/explore/main/topics/react/react.png" alt="React" width="48" height="48"/>
+  <img src="https://raw.githubusercontent.com/github/explore/main/topics/django/django.png" alt="Django" width="48" height="48"/>
+  <img src="https://vitejs.dev/logo.svg" alt="Vite" width="48" height="48"/>
+  <img src="https://raw.githubusercontent.com/github/explore/main/topics/postgresql/postgresql.png" alt="PostgreSQL" width="48" height="48"/>
+  <img src="https://static.wikia.nocookie.net/logopedia/images/a/a7/Vercel_favicon.svg" alt="Vercel" width="48" height="48"/>
+  <img src="https://us1.discourse-cdn.com/flex016/uploads/render/original/2X/1/11352202c8503f736bea5efb59684f678d7c860c.svg" alt="Render" width="48" height="48"/>
+</p>
+
+A modern, beginner-friendly full-stack web application for managing a list of books. This project demonstrates how to build a robust RESTful API backend with **Django** and **Django REST Framework**, a fast and beautiful frontend with **React** (powered by **Vite**), and how to connect everything to a scalable **Amazon RDS PostgreSQL** cloud database. The app allows users to view, add, update, and delete books, and is ready for cloud deployment (Vercel FE + Render BE).
+
+---
+
+## Prerequisites
+  <img src="https://nodejs.org/static/logos/nodejsDark.svg" alt="Nodejs" height="48"/>
+  <img src="https://upload.wikimedia.org/wikipedia/commons/archive/c/c3/20220730085403%21Python-logo-notext.svg" alt="Nodejs" height="48"/>
+
+- [Node.js & npm](https://nodejs.org/) (for React frontend)
+- [Python 3.10+](https://www.python.org/) (for Django backend)
+- **Make sure both are installed before running any commands!**
 
 ---
 
@@ -61,7 +80,7 @@ react-django/
   - `server/newproject/api/models.py` defines the `Book` model (fields: title, release_year).
   - `server/newproject/api/serializer.py` defines `BookSerializer` to convert between model instances and JSON.
 - **Database:**
-  - All book data is stored in `db.sqlite3` (SQLite database).
+  - All book data is stored in the database (SQLite for local, Amazon RDS PostgreSQL for production).
 
 ### 4. Data Flow Example: Adding a Book
 1. User fills out the form and clicks "Add Book" in the React UI.
@@ -77,15 +96,16 @@ react-django/
 ### Backend (Django)
 1. Open a terminal and navigate to `server/newproject/`.
 2. Install dependencies:
-   ```sh
-   pip install django djangorestframework
+   ```powershell
+   pip install django djangorestframework django-cors-headers gunicorn psycopg2-binary
    ```
 3. Run migrations:
-   ```sh
+   ```powershell
+   python manage.py makemigrations
    python manage.py migrate
    ```
 4. Start the server:
-   ```sh
+   ```powershell
    python manage.py runserver
    ```
    The API will be available at `http://127.0.0.1:8000/api/`.
@@ -93,11 +113,11 @@ react-django/
 ### Frontend (React)
 1. Open a new terminal and navigate to `client/app/`.
 2. Install dependencies:
-   ```sh
+   ```powershell
    npm install
    ```
 3. Start the development server:
-   ```sh
+   ```powershell
    npm run dev
    ```
    The app will be available at `http://localhost:5173/` (or as shown in your terminal).
