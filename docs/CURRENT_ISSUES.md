@@ -1,6 +1,8 @@
 # Common Issues & Gotchas (React + Django + Cloud Deployment)
 
-This file lists current and frequently encountered issues with this project, especially when deploying to free cloud services like Render and Vercel.
+This file lists current and frequently encountered issues with this project, especially when deploying to free cloud services like Render and Vercel. Use this as a reference when troubleshooting deployment or development problems.
+
+**Last Updated:** May 22, 2025
 
 ---
 
@@ -21,8 +23,19 @@ This file lists current and frequently encountered issues with this project, esp
 
 ## 4. CORS Errors
 - **Issue:** CORS errors if frontend URL is not in Django's `CORS_ALLOWED_ORIGINS`.
-- **Effect:** API requests from frontend are blocked.
-- **Workaround:** Add your deployed frontend URL to `CORS_ALLOWED_ORIGINS` in `settings.py` and redeploy.
+- **Effect:** API requests from frontend are blocked with "Access-Control-Allow-Origin" errors in console.
+- **Workaround:** 
+  1. Install django-cors-headers: `pip install django-cors-headers`
+  2. Add 'corsheaders' to INSTALLED_APPS in settings.py
+  3. Add 'corsheaders.middleware.CorsMiddleware' to MIDDLEWARE (as high as possible)
+  4. Configure allowed origins:
+  ```python
+  CORS_ALLOWED_ORIGINS = [
+      "https://reactjs-django-test-app.vercel.app",  # Production frontend
+      "http://localhost:5173",                      # Local frontend
+  ]
+  ```
+  5. For development only, you can use: `CORS_ALLOW_ALL_ORIGINS = True` (not recommended for production)
 
 ## 5. Database Connection Errors (Local vs. Cloud)
 - **Issue:** Running `python manage.py migrate` locally with cloud DB settings but no env vars set.
@@ -42,7 +55,10 @@ This file lists current and frequently encountered issues with this project, esp
 ## 8. Static Files Not Served in Production
 - **Issue:** Django static files (CSS, JS) not served by default in production.
 - **Effect:** Admin or custom static assets may not load.
-- **Workaround:** Use WhiteNoise or proper static file hosting for production.
+- **Workaround:** Use WhiteNoise or proper static file hosting for production. For WhiteNoise:
+  1. Install: `pip install whitenoise`
+  2. Add to MIDDLEWARE: `'whitenoise.middleware.WhiteNoiseMiddleware'`
+  3. Configure: `STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'`
 
 ## 9. AWS RDS Security Group
 - **Issue:** RDS not accessible from Render due to security group rules.

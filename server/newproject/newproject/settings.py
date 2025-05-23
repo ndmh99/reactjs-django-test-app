@@ -3,8 +3,7 @@ Django settings for newproject project.
 
 This file configures all the settings for your Django backend, including database, installed apps, middleware, static files, and more.
 
-- For local development, it uses SQLite by default (easy, no setup required).
-- For production (e.g., Render + Amazon RDS), it uses PostgreSQL if the required environment variables are set (secure, scalable, cloud-ready).
+- Database configuration automatically detects environment: uses PostgreSQL when RDS environment variables are available, falls back to SQLite for local development.
 - CORS and REST framework are enabled for API and frontend communication.
 - All sensitive/production settings (like SECRET_KEY, database credentials) should be set using environment variables in production.
 
@@ -79,28 +78,32 @@ TEMPLATES = [
 WSGI_APPLICATION = 'newproject.wsgi.application'  # WSGI entry point for deployment
 
 # Database configuration
-# Use Amazon RDS/PostgreSQL for production (default)
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': os.environ.get('RDS_DB_NAME'),
-        'USER': os.environ.get('RDS_USERNAME'),
-        'PASSWORD': os.environ.get('RDS_PASSWORD'),
-        'HOST': os.environ.get('RDS_HOSTNAME'),
-        'PORT': os.environ.get('RDS_PORT', '5432'),
-    }
-}
+# Automatically use PostgreSQL if RDS environment variables are available, otherwise use SQLite
+rds_db_name = os.environ.get('RDS_DB_NAME')
+rds_username = os.environ.get('RDS_USERNAME')
+rds_password = os.environ.get('RDS_PASSWORD')
+rds_hostname = os.environ.get('RDS_HOSTNAME')
 
-# ---
-# For local development with SQLite3, comment out the block above and uncomment the block below:
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': BASE_DIR / 'db.sqlite3',
-#     }
-# }
-# ---
-# See the README and docs for instructions on switching between RDS and SQLite3.
+if all([rds_db_name, rds_username, rds_password, rds_hostname]):
+    # Use PostgreSQL for production (when all RDS variables are set)
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql',
+            'NAME': rds_db_name,
+            'USER': rds_username,
+            'PASSWORD': rds_password,
+            'HOST': rds_hostname,
+            'PORT': os.environ.get('RDS_PORT', '5432'),
+        }
+    }
+else:
+    # Use SQLite for local development (when RDS variables are missing)
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
+        }
+    }
 
 # Password validation (recommended for production)
 # These validators help enforce strong passwords for admin and users.
@@ -138,6 +141,5 @@ CORS_ALLOWED_ORIGINS = [
 # Quick tips for new users:
 # - Never commit real secrets or production credentials to GitHub.
 # - Always use environment variables for sensitive info in production.
-# - For local dev, you can use SQLite and DEBUG=True for easy setup.
+# - Database automatically switches: PostgreSQL (production) when RDS env vars are set, SQLite (local) otherwise.
 # - For deployment, set DEBUG=False, use strong SECRET_KEY, and configure allowed hosts and CORS properly.
-# - If you see database connection errors locally, you're probably missing RDS env vars—just use SQLite for local dev!

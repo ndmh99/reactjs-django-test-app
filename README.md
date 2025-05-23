@@ -9,7 +9,7 @@
   <img src="https://us1.discourse-cdn.com/flex016/uploads/render/original/2X/1/11352202c8503f736bea5efb59684f678d7c860c.svg" alt="Render" width="48" height="48"/>
 </p>
 
-A modern, beginner-friendly full-stack web application for managing a list of books. This project demonstrates how to build a robust RESTful API backend with **Django** and **Django REST Framework**, a fast and beautiful frontend with **React** (powered by **Vite**), and how to connect everything to a scalable **Amazon RDS PostgreSQL** cloud database. The app allows users to view, add, update, and delete books, and is ready for cloud deployment (Vercel FE + Render BE).
+A modern, beginner-friendly full-stack web application for managing a list of books. This project demonstrates how to build a robust RESTful API backend with **Django** and **Django REST Framework**, a fast and beautiful frontend with **React** (powered by **Vite**), and how to connect everything to a scalable **Amazon RDS PostgreSQL** cloud database. The database automatically switches between PostgreSQL (production with RDS environment variables) and SQLite (local development). The app allows users to view, add, update, and delete books, and is ready for cloud deployment (Vercel FE + Render BE).
 
 ---
 
@@ -145,18 +145,3 @@ react-django/
 This project is for educational purposes.
 
 ---
-
-## Database Configuration (Switching Between RDS and SQLite3)
-
-By default, the backend is configured to use **Amazon RDS PostgreSQL** for production and cloud deployment.
-
-**To run locally with SQLite3:**
-1. Open `server/newproject/newproject/settings.py`.
-2. Comment out the RDS/PostgreSQL `DATABASES` block.
-3. Uncomment the provided SQLite3 `DATABASES` block (see the comments in `settings.py`).
-4. Run migrations and start the server as usual.
-
-**To deploy or use RDS again:**
-1. Comment out the SQLite3 block.
-2. Uncomment the RDS/PostgreSQL block.
-3. Make sure your environment variables for RDS are set (on Render or your production environment).

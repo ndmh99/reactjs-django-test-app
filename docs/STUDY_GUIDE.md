@@ -143,16 +143,32 @@ This is a brainless step-by-step guide to build a complete full-stack web applic
     
     WSGI_APPLICATION = 'newproject.wsgi.application'
     
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.postgresql',
-            'NAME': config('RDS_DB_NAME', default='postgres'),
-            'USER': config('RDS_USERNAME', default='postgres'),
-            'PASSWORD': config('RDS_PASSWORD', default='password'),
-            'HOST': config('RDS_HOSTNAME', default='localhost'),
-            'PORT': config('RDS_PORT', default='5432'),
+    # Database configuration - automatically detects environment
+    rds_db_name = config('RDS_DB_NAME', default=None)
+    rds_username = config('RDS_USERNAME', default=None)
+    rds_password = config('RDS_PASSWORD', default=None)
+    rds_hostname = config('RDS_HOSTNAME', default=None)
+    
+    if all([rds_db_name, rds_username, rds_password, rds_hostname]):
+        # Use PostgreSQL when RDS variables are available
+        DATABASES = {
+            'default': {
+                'ENGINE': 'django.db.backends.postgresql',
+                'NAME': rds_db_name,
+                'USER': rds_username,
+                'PASSWORD': rds_password,
+                'HOST': rds_hostname,
+                'PORT': config('RDS_PORT', default='5432'),
+            }
         }
-    }
+    else:
+        # Use SQLite for local development
+        DATABASES = {
+            'default': {
+                'ENGINE': 'django.db.backends.sqlite3',
+                'NAME': BASE_DIR / 'db.sqlite3',
+            }
+        }
     
     LANGUAGE_CODE = 'en-us'
     TIME_ZONE = 'UTC'
