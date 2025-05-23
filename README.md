@@ -5,7 +5,7 @@
   <img src="https://raw.githubusercontent.com/github/explore/main/topics/django/django.png" alt="Django" width="48" height="48"/>
   <img src="https://vitejs.dev/logo.svg" alt="Vite" width="48" height="48"/>
   <img src="https://raw.githubusercontent.com/github/explore/main/topics/postgresql/postgresql.png" alt="PostgreSQL" width="48" height="48"/>
-  <img src="https://static.wikia.nocookie.net/logopedia/images/a/a7/Vercel_favicon.svg" alt="Vercel" width="48" height="48"/>
+  <img src="https://assets.vercel.com/image/upload/v1588805858/repositories/vercel/logo.png" alt="Vercel" width="48" height="48"/>
   <img src="https://us1.discourse-cdn.com/flex016/uploads/render/original/2X/1/11352202c8503f736bea5efb59684f678d7c860c.svg" alt="Render" width="48" height="48"/>
 </p>
 
@@ -14,8 +14,8 @@ A modern, beginner-friendly full-stack web application for managing a list of bo
 ---
 
 ## Prerequisites
-  <img src="https://nodejs.org/static/logos/nodejsDark.svg" alt="Nodejs" height="48"/>
-  <img src="https://upload.wikimedia.org/wikipedia/commons/archive/c/c3/20220730085403%21Python-logo-notext.svg" alt="Nodejs" height="48"/>
+  <img src="https://avatars.githubusercontent.com/u/9950313?s=200&v=4" alt="Nodejs" height="48"/>
+  <img src="https://upload.wikimedia.org/wikipedia/commons/archive/c/c3/20220730085403%21Python-logo-notext.svg" alt="Python" height="48"/>
 
 - [Node.js & npm](https://nodejs.org/) (for React frontend)
 - [Python 3.10+](https://www.python.org/) (for Django backend)
