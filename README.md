@@ -1,4 +1,4 @@
-# React/Vite + Django + Amazon RDS Book Management Project
+# React/Vite + Django + Amazon RDS + Docker Book Management Project
 
 <p align="center">
   <img src="https://raw.githubusercontent.com/github/explore/main/topics/react/react.png" alt="React" width="48" height="48"/>
@@ -7,19 +7,89 @@
   <img src="https://raw.githubusercontent.com/github/explore/main/topics/postgresql/postgresql.png" alt="PostgreSQL" width="48" height="48"/>
   <img src="https://assets.vercel.com/image/upload/v1588805858/repositories/vercel/logo.png" alt="Vercel" width="48" height="48"/>
   <img src="https://us1.discourse-cdn.com/flex016/uploads/render/original/2X/1/11352202c8503f736bea5efb59684f678d7c860c.svg" alt="Render" width="48" height="48"/>
+  <img src="https://static-00.iconduck.com/assets.00/docker-icon-1024x876-69aqwp3k.png" alt="Render" width="48"/>
 </p>
 
-A modern, beginner-friendly full-stack web application for managing a list of books. This project demonstrates how to build a robust RESTful API backend with **Django** and **Django REST Framework**, a fast and beautiful frontend with **React** (powered by **Vite**), and how to connect everything to a scalable **Amazon RDS PostgreSQL** cloud database. The database automatically switches between PostgreSQL (production with RDS environment variables) and SQLite (local development). The app allows users to view, add, update, and delete books, and is ready for cloud deployment (Vercel FE + Render BE).
+A modern, beginner-friendly full-stack web application for managing a list of books. This project demonstrates how to build a robust RESTful API backend with **Django** and **Django REST Framework**, a fast and beautiful frontend with **React** (powered by **Vite**), and how to connect everything to a scalable **Amazon RDS PostgreSQL** cloud database. The database automatically switches between PostgreSQL (production with RDS environment variables) and SQLite (local development or Docker). The app allows users to view, add, update, and delete books, and is ready for cloud deployment (Vercel FE + Render BE, or Docker Compose for unified deployment).
+
+---
+
+## 📚 Quick Navigation
+- [Docker Quick Start](#-docker-quick-start-recommended)
+- [Manual Setup](#traditional-manual-setup-advanced)
+- [Project Structure](#project-structure)
+- [Action/Data Flow](#action-flow-how-the-app-works)
+- [Key Files](#key-files-explained)
+- [Deployment & Cloud](docs/PROJECT_ONLINE_GUIDE.md)
+- [Command Cheatsheet](docs/COMMANDS_CHEATSHEET.md)
+- [Study Guide](docs/STUDY_GUIDE.md)
+
+---
+
+## 🐳 Docker Quick Start (Recommended)
+
+The easiest way to run this project is with Docker Compose. This will start both the React frontend and Django backend in containers, with hot reload and persistent SQLite database (auto-fallback if no RDS env vars).
+
+```sh
+# Start the full stack (frontend + backend)
+docker-compose up --build
+
+# Stop all services
+docker-compose down
+```
+- Frontend: http://localhost:5173
+- Backend API: http://localhost:8000/api/
+
+For advanced Docker/cloud deployment, see [`docs/PROJECT_ONLINE_GUIDE.md`](docs/PROJECT_ONLINE_GUIDE.md).
+
+> **Production:**
+> - Use Docker Compose with PostgreSQL/RDS env vars for production DB.
+> - Or deploy separately: [Vercel (frontend)](https://vercel.com/) + [Render (backend)](https://render.com/).
+> - See [Project Online Guide](docs/PROJECT_ONLINE_GUIDE.md) for all deployment options.
 
 ---
 
 ## Prerequisites
-  <img src="https://avatars.githubusercontent.com/u/9950313?s=200&v=4" alt="Nodejs" height="48"/>
-  <img src="https://upload.wikimedia.org/wikipedia/commons/archive/c/c3/20220730085403%21Python-logo-notext.svg" alt="Python" height="48"/>
+<img src="https://avatars.githubusercontent.com/u/9950313?s=200&v=4" alt="Nodejs" width="48" height="48"/>
+<img src="https://upload.wikimedia.org/wikipedia/commons/archive/c/c3/20220730085403%21Python-logo-notext.svg" alt="Python" width="48" height="48"/>
 
 - [Node.js & npm](https://nodejs.org/) (for React frontend)
 - [Python 3.10+](https://www.python.org/) (for Django backend)
-- **Make sure both are installed before running any commands!**
+- [Docker Desktop](https://www.docker.com/products/docker-desktop/) (for containerized workflow)
+- **Make sure all are installed before running any commands!**
+
+---
+
+## Traditional Manual Setup (Advanced)
+
+### Backend (Django)
+1. Open a terminal and navigate to `server/newproject/`.
+2. Install dependencies:
+   ```powershell
+   pip install django djangorestframework django-cors-headers gunicorn psycopg2-binary
+   ```
+3. Run migrations:
+   ```powershell
+   python manage.py makemigrations
+   python manage.py migrate
+   ```
+4. Start the server:
+   ```powershell
+   python manage.py runserver
+   ```
+   The API will be available at `http://127.0.0.1:8000/api/`.
+
+### Frontend (React)
+1. Open a new terminal and navigate to `client/app/`.
+2. Install dependencies:
+   ```powershell
+   npm install
+   ```
+3. Start the development server:
+   ```powershell
+   npm run dev
+   ```
+   The app will be available at `http://localhost:5173/` (or as shown in your terminal).
 
 ---
 
@@ -33,20 +103,25 @@ react-django/
 │       │   ├── App.jsx    # Main React component (UI & API calls)
 │       │   ├── App.css    # Styles for the app
 │       │   └── ...        # Other React files/assets
+│       ├── Dockerfile     # Docker config for React frontend
 │       └── ...            # Vite config, public assets, etc.
-└── server/                # Backend (Django)
-    └── newproject/
-        ├── api/           # Django app for API
-        │   ├── models.py      # Book model (database)
-        │   ├── serializer.py  # BookSerializer (model <-> JSON)
-        │   ├── views.py       # API views (CRUD logic)
-        │   ├── urls.py        # API URL routes
-        │   └── ...            # Admin, migrations, etc.
-        ├── newproject/    # Django project config
-        │   ├── settings.py    # Django settings
-        │   ├── urls.py        # Main URL config (includes API)
-        │   └── ...
-        └── manage.py      # Django management script
+├── server/                # Backend (Django)
+│   └── newproject/
+│       ├── api/           # Django app for API
+│       │   ├── models.py      # Book model (database)
+│       │   ├── serializer.py  # BookSerializer (model <-> JSON)
+│       │   ├── views.py       # API views (CRUD logic)
+│       │   ├── urls.py        # API URL routes
+│       │   └── ...            # Admin, migrations, etc.
+│       ├── newproject/    # Django project config
+│       │   ├── settings.py    # Django settings
+│       │   ├── urls.py        # Main URL config (includes API)
+│       │   └── ...
+│       ├── manage.py      # Django management script
+│       ├── Dockerfile     # Docker config for Django backend
+│       └── requirements.txt   # Python dependencies
+├── docker-compose.yml     # Multi-container setup (frontend + backend)
+└── .dockerignore          # Files to exclude from Docker builds
 ```
 
 ---
@@ -91,41 +166,7 @@ react-django/
 
 ---
 
-## How to Run the Project
-
-### Backend (Django)
-1. Open a terminal and navigate to `server/newproject/`.
-2. Install dependencies:
-   ```powershell
-   pip install django djangorestframework django-cors-headers gunicorn psycopg2-binary
-   ```
-3. Run migrations:
-   ```powershell
-   python manage.py makemigrations
-   python manage.py migrate
-   ```
-4. Start the server:
-   ```powershell
-   python manage.py runserver
-   ```
-   The API will be available at `http://127.0.0.1:8000/api/`.
-
-### Frontend (React)
-1. Open a new terminal and navigate to `client/app/`.
-2. Install dependencies:
-   ```powershell
-   npm install
-   ```
-3. Start the development server:
-   ```powershell
-   npm run dev
-   ```
-   The app will be available at `http://localhost:5173/` (or as shown in your terminal).
-
----
-
 ## Key Files Explained
-
 - **App.jsx** (React): Handles all UI and API calls. Well-commented for beginners.
 - **models.py** (Django): Defines the Book model (database structure).
 - **serializer.py** (Django): Converts Book objects to/from JSON for API communication.
@@ -134,10 +175,28 @@ react-django/
 
 ---
 
-## Learning Resources
-- [Django REST Framework](https://www.django-rest-framework.org/)
-- [React Documentation](https://react.dev/)
-- [Vite (React build tool)](https://vitejs.dev/)
+## Deployment & Workflow Options
+- **Docker Compose (Recommended):** Unified local/prod workflow, easy cloud migration, automatic DB fallback.
+- **Vercel + Render:** Deploy frontend/backend separately, connect to RDS for production.
+- **Cloud Containers:** Push Docker images to registry and deploy on platforms like Railway, DigitalOcean, AWS ECS, etc.
+- **See:** [`docs/PROJECT_ONLINE_GUIDE.md`](docs/PROJECT_ONLINE_GUIDE.md)
+
+---
+
+## 📖 Learning Resources
+
+Expand your knowledge with these official guides and helpful documentation:
+
+- [Django REST Framework Documentation](https://www.django-rest-framework.org/) — Learn how to build powerful REST APIs with Django.
+- [React Official Docs](https://react.dev/) — The definitive guide to building user interfaces with React.
+- [Vite Documentation](https://vitejs.dev/) — Fast frontend tooling for modern web projects, including React.
+
+For deeper dives, check out:
+- [Django Official Documentation](https://docs.djangoproject.com/en/stable/)
+- [PostgreSQL Documentation](https://www.postgresql.org/docs/)
+- [Docker Documentation](https://docs.docker.com/)
+
+These resources are great starting points for both beginners and experienced developers.
 
 ---
 

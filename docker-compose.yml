@@ -1,0 +1,144 @@
+# =============================================================================
+# Docker Compose Configuration for React-Django Development Environment
+# =============================================================================
+# This configuration sets up a complete development environment with:
+# - React frontend (Vite dev server with hot reload)
+# - Django backend (with SQLite database for simplicity)
+# - Automatic service dependency management
+# - Volume persistence for development files and database
+# =============================================================================
+
+version: "3.8"
+
+services:
+  # ---------------------------------------------------------------------------
+  # FRONTEND SERVICE (React + Vite)
+  # ---------------------------------------------------------------------------
+  # Runs the React development server with hot reload enabled
+  client:
+    build:
+      context: ./client/app
+      dockerfile: Dockerfile
+    ports:
+      - "5173:5173"  # Vite default dev server port
+    environment:
+      - NODE_ENV=development  # Enables hot reload and development features
+    depends_on:
+      - server  # Wait for backend to start before starting frontend
+    volumes:
+      # Enable hot reload: sync local files with container
+      - ./client/app:/app
+      # Prevent overwriting node_modules installed in container
+      - /app/node_modules
+    networks:
+      - app-network
+
+  # ---------------------------------------------------------------------------
+  # BACKEND SERVICE (Django)
+  # ---------------------------------------------------------------------------
+  # Runs the Django development server with SQLite database
+  server:
+    build:
+      context: ./server/newproject
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"  # Django default development server port
+    environment:
+      - DEBUG=1  # Enable Django debug mode for development
+      # DATABASE_URL is intentionally not set to force SQLite usage
+      # For PostgreSQL, uncomment: DATABASE_URL=postgresql://user:pass@database:5432/mydb
+    volumes:
+      # Enable hot reload: sync local Django files with container
+      - ./server/newproject:/app
+      # Persist SQLite database file across container restarts
+      - sqlite_data:/app
+    networks:
+      - app-network
+
+# =============================================================================
+# REMOVED SERVICES (Available for future use)
+# =============================================================================
+# 
+# PostgreSQL Database Service (commented out - using SQLite instead)
+# Uncomment this section if you want to use PostgreSQL:
+#
+#  database:
+#    image: postgres:15-alpine
+#    environment:
+#      - POSTGRES_DB=mydb
+#      - POSTGRES_USER=postgres
+#      - POSTGRES_PASSWORD=password
+#    volumes:
+#      - postgres_data:/var/lib/postgresql/data
+#    ports:
+#      - "5432:5432"  # Expose PostgreSQL port for external access
+#    networks:
+#      - app-network
+
+# =============================================================================
+# VOLUMES
+# =============================================================================
+volumes:
+  # Persists SQLite database file across container restarts
+  # Location: /var/lib/docker/volumes/[project]_sqlite_data/_data
+  sqlite_data:
+    driver: local
+  
+  # PostgreSQL data volume (commented out - not used with SQLite)
+  # Uncomment if using PostgreSQL:
+  # postgres_data:
+  #   driver: local
+
+# =============================================================================
+# NETWORKS
+# =============================================================================
+networks:
+  # Custom network for service communication
+  # Allows services to communicate using service names (e.g., http://server:8000)
+  app-network:
+    driver: bridge
+
+# =============================================================================
+# USAGE INSTRUCTIONS
+# =============================================================================
+#
+# Start the development environment:
+#   docker-compose up --build
+#
+# Start in background:
+#   docker-compose up -d --build
+#
+# View logs:
+#   docker-compose logs -f
+#
+# Stop services:
+#   docker-compose down
+#
+# Reset database (remove SQLite volume):
+#   docker-compose down -v
+#
+# Access services:
+#   - React frontend: http://localhost:5173
+#   - Django backend: http://localhost:8000
+#   - Django admin: http://localhost:8000/admin
+#
+# Run Django commands:
+#   docker-compose exec server python manage.py migrate
+#   docker-compose exec server python manage.py createsuperuser
+#   docker-compose exec server python manage.py collectstatic
+#
+# =============================================================================
+# SWITCHING TO POSTGRESQL
+# =============================================================================
+#
+# To switch from SQLite to PostgreSQL:
+# 1. Uncomment the database service above
+# 2. Uncomment postgres_data volume
+# 3. Add DATABASE_URL to server environment:
+#    - DATABASE_URL=postgresql://postgres:password@database:5432/mydb
+# 4. Add depends_on to server service:
+#    depends_on:
+#      - database
+# 5. Rebuild: docker-compose down && docker-compose up --build
+#
+# =============================================================================

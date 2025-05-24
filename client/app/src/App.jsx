@@ -45,9 +45,11 @@ function App() {
 
   /**
    * Base URL for the API, change this to point to a different backend if needed.
+   * Uncomment the appropriate line for deployment or local testing below.
    * @constant {string}
    */
-  const API_BASE_URL = "https://reactjs-django-simple-crud-book-app.onrender.com/api";
+  // const API_BASE_URL = "https://reactjs-django-simple-crud-book-app.onrender.com/api"; // FOR DEPLOYMENT
+  const API_BASE_URL = "http://localhost:8000/api"; // FOR LOCALHOST
 
   /**
    * useEffect runs fetchBooks() once when the component mounts.

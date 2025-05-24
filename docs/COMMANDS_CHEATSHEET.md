@@ -1,10 +1,64 @@
 # React + Django Command Cheatsheet
 
-> **Prerequisites:** Make sure you have React (Node.js & npm) and Django (Python) installed on your system before running these commands.
-> 
-> **OS:** These commands are optimized for Windows PowerShell. For other shells, adjust accordingly.
-> 
-> **Last Updated:** May 22, 2025
+---
+
+## 📚 Table of Contents
+- [Docker Commands (Recommended)](#-docker-commands-recommended)
+- [Django Backend Manual Commands](#django-backend-servernewproject)
+- [React Frontend Manual Commands](#react-frontend-clientapp)
+- [Git Commands](#git-commands)
+- [Environment & Dependencies](#environment--dependencies)
+- [Development Workflow](#development-workflow)
+- [Deployment Commands](#deployment-commands)
+- [Troubleshooting](#troubleshooting-commands)
+- [Useful One-liners](#useful-one-liners)
+
+---
+
+## 🐳 Docker Commands (Recommended)
+
+> **Tip:** Use these for the fastest, most reliable workflow. No need to install Python/Node/npm globally!
+
+### Core Workflow
+```powershell
+# Start entire application (frontend + backend)
+docker-compose up --build
+
+# Start in background (detached mode)
+docker-compose up --build -d
+
+# Stop all services
+docker-compose down
+
+# Stop and remove volumes (reset database)
+docker-compose down -v
+```
+
+### Build & Logs
+```powershell
+# Build all services
+docker-compose build
+
+# View logs
+docker-compose logs -f
+```
+
+### Executing Commands in Containers
+```powershell
+# Run Django management command in backend container
+docker-compose exec server python manage.py migrate
+
+# Run npm command in frontend container
+docker-compose exec client npm run build
+
+# Open shell in backend
+docker-compose exec server bash
+
+# Open shell in frontend
+docker-compose exec client sh
+```
+
+> For advanced/manual use, see the manual Django and React commands below.
 
 ---
 

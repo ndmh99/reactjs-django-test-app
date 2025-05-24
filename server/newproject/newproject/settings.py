@@ -48,6 +48,7 @@ INSTALLED_APPS = [
 
 # Middleware are hooks into Django's request/response processing.
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware', # Enables CORS
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -55,7 +56,6 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'corsheaders.middleware.CorsMiddleware', # Enables CORS
 ]
 
 ROOT_URLCONF = 'newproject.urls'  # Main URL config file
@@ -131,10 +131,10 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # CORS settings
 # Only allow requests from your deployed frontend and local dev
 # This is important for security: only your frontend can talk to your backend API.
-CORS_ALLOW_ALL_ORIGINS = False
+CORS_ALLOW_ALL_ORIGINS = False  # Disable all origins by default
 CORS_ALLOWED_ORIGINS = [
     "https://reactjs-django-test-app.vercel.app",  # Production frontend
-    "http://localhost:5173",                      # Local frontend
+    "http://localhost:5173",                       # Local frontend
 ]
 
 # ---
