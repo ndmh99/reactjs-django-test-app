@@ -14,8 +14,8 @@ A modern, beginner-friendly full-stack web application for managing a list of bo
 ---
 
 ## Prerequisites
-  <img src="https://avatars.githubusercontent.com/u/9950313?s=200&v=4" alt="Nodejs" height="48"/>
-  <img src="https://upload.wikimedia.org/wikipedia/commons/archive/c/c3/20220730085403%21Python-logo-notext.svg" alt="Python" height="48"/>
+  <img src="https://avatars.githubusercontent.com/u/9950313?s=200&v=4" alt="Nodejs" width="48" height="48"/>
+  <img src="https://upload.wikimedia.org/wikipedia/commons/archive/c/c3/20220730085403%21Python-logo-notext.svg" alt="Python" width="48" height="48"/>
 
 - [Node.js & npm](https://nodejs.org/) (for React frontend)
 - [Python 3.10+](https://www.python.org/) (for Django backend)
