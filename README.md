@@ -7,6 +7,7 @@
   <img src="https://raw.githubusercontent.com/github/explore/main/topics/postgresql/postgresql.png" alt="PostgreSQL" width="48" height="48"/>
   <img src="https://assets.vercel.com/image/upload/v1588805858/repositories/vercel/logo.png" alt="Vercel" width="48" height="48"/>
   <img src="https://us1.discourse-cdn.com/flex016/uploads/render/original/2X/1/11352202c8503f736bea5efb59684f678d7c860c.svg" alt="Render" width="48" height="48"/>
+  <img src="https://static-00.iconduck.com/assets.00/docker-icon-1024x876-69aqwp3k.png" alt="Docker" width="48"/>
 </p>
 
 A modern, beginner-friendly full-stack web application for managing a list of books. This project demonstrates how to build a robust RESTful API backend with **Django** and **Django REST Framework**, a fast and beautiful frontend with **React** (powered by **Vite**), and how to connect everything to a scalable **Amazon RDS PostgreSQL** cloud database. The database automatically switches between PostgreSQL (production with RDS environment variables) and SQLite (local development). The app allows users to view, add, update, and delete books, and is ready for cloud deployment (Vercel FE + Render BE).
