@@ -2,7 +2,7 @@
 
 <p align="center">
   <img src="https://raw.githubusercontent.com/github/explore/main/topics/react/react.png" alt="React" width="48" height="48"/>
-  <img src="https://raw.githubusercontent.com/github/explore/main/topics/django/django.png" alt="Django" width="48" height="48"/>
+  <img src="https://www.svgrepo.com/show/353657/django-icon.svg" alt="Django" width="48" height="48"/>
   <img src="https://vitejs.dev/logo.svg" alt="Vite" width="48" height="48"/>
   <img src="https://raw.githubusercontent.com/github/explore/main/topics/postgresql/postgresql.png" alt="PostgreSQL" width="48" height="48"/>
   <img src="https://assets.vercel.com/image/upload/v1588805858/repositories/vercel/logo.png" alt="Vercel" width="48" height="48"/>
